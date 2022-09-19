@@ -174,8 +174,12 @@ const generateBingoCards = async () => {
           checkedItems.push({ row: rowId, column: columnId });
           checkedDIV.innerHTML = `${getRandomEmoji()}`;
           checkedDIV.className = "checked";
-          const rowCount = checkedItems.filter((obj) => obj.row === rowId).length;
-          console.log(checkedItems);
+          const columnCount = checkedItems.filter((obj) => obj.column === columnId).length;
+          if (columnCount === 5) {
+            bingo = true;
+            win();
+          }
+
           const rowExist = (item) => item.row === rowId;
           const item = rowLookup.find(rowExist);
           if (item != undefined) {
@@ -187,12 +191,7 @@ const generateBingoCards = async () => {
           } else {
             rowLookup.push({ row: rowId, columns: 1 });
             rows++;
-            /*if (rows === 5) {
-              bingo = true;
-              win();
-            }*/
           }
-          console.log(rowLookup);
         }
         checkDiagonal(checkedItems);
       };
