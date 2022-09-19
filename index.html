@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="normalize.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <title>Secret stream bingo</title>
+</head>
+<style>
+    @font-face {
+        font-family: "title-font-creepster";
+        src: url("./fonts/CHILLER.TTF");
+    }
+
+    @font-face {
+        font-family: "grid-item-font-chiller";
+        src: url("./fonts/creepster.regular.ttf");
+    }
+
+    body {
+        margin: 0;
+        background-image: url("./images/background_halloween.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+
+    main {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    section {
+        height: 80vh;
+        width: 65vw;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .bingo-title {
+        display: flex;
+        justify-content: center;
+    }
+
+    .bingo-title>h1 {
+        margin: 0;
+        font-size: 100px;
+        color: #751916;
+        text-shadow: -1px 0 #ffe78a, 0 1px #ffe78a, 1px 0 #ffe78a, 0 -1px #ffe78a;
+        font-family: "grid-item-font-chiller";
+    }
+
+    #bingo-grid {
+        height: 90%;
+        display: grid;
+        grid-template-columns: repeat(5, 20%);
+        grid-template-rows: repeat(5, 20%);
+        padding: 5px;
+        background-color: #ab0200;
+        border-radius: 10px;
+        margin: 5px;
+    }
+
+    .grid-item {
+        font-family: "grid-item-font-chiller";
+        color: #ab0200;
+        background-color: #ffe78a;
+        border: 1px solid #ab0200;
+        font-size: 30px;
+        text-align: center;
+        opacity: 0.9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .checked {
+        transition: ease-in .08s;
+        font-size: 100px;
+        color: rgb(218, 166, 26);
+        position: absolute;
+        z-index: 1;
+        opacity: 0.9;
+    }
+
+    .bingo-win {
+        font-family: "grid-item-font-chiller";
+        font-size: 50px;
+        color: #751916;
+        position: absolute;
+        z-index: 1;
+        width: inherit;
+        height: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+    }
+
+    .bingo-win>h1.gentle-tilt-move-shake {
+        animation: tilt-n-move-shaking 0.25s infinite;
+    }
+
+    svg {
+        transition: transform .5s ease-in-out;
+    }
+
+    svg:hover {
+        transform: rotate(360deg);
+    }
+
+    .reset-button {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        border: none;
+        font-size: 30px;
+        padding: 15px;
+        text-decoration: none;
+        cursor: pointer;
+        background-color: #751916;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    }
+
+    .credit {
+        color: #fff;
+        text-shadow: -1px 0 rgba(0, 0, 0, 0.486), 0 1px rgba(0, 0, 0, 0.486), 1px 0 rgba(0, 0, 0, 0.486), 0 -1px rgba(0, 0, 0, 0.486);
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+    .github-logo {
+        margin: 2px;
+    }
+
+    .github-code {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @keyframes tilt-n-move-shaking {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+
+        25% {
+            transform: translate(5px, 5px) rotate(5deg);
+        }
+
+        50% {
+            transform: translate(0, 0) rotate(0eg);
+        }
+
+        75% {
+            transform: translate(-5px, 5px) rotate(-5deg);
+        }
+
+        100% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        section {
+            width: 100vw;
+        }
+
+        .bingo-title>h1 {
+            font-size: 50px;
+        }
+    }
+
+    @media only screen and (max-width: 500px) {
+        .bingo-title>h1 {
+            font-size: 30px;
+        }
+
+        .grid-item {
+            font-size: 20px;
+        }
+
+        .checked {
+            font-size: 70px;
+
+        }
+    }
+
+    @media only screen and (max-width: 380px) {
+        .checked {
+            font-size: 50px;
+
+        }
+    }
+</style>
+
+<body>
+    <div id="tsparticles"></div>
+    <main>
+        <section>
+            <div class="bingo-title">
+                <h1>🎃 Secret stream bingo 👻</h1>
+            </div>
+            <div id="bingo-grid">
+            </div>
+            <div id="win" class="bingo-win">
+                <h1>Bingo!</h1>
+                <button class="reset-button" role="button" onclick="reset()">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor"
+                            class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" fill="white"></path>
+                            <path
+                                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"
+                                fill="white"></path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </section>
+        <div class="credit">Made with ☕️ & ❤️ by Chayze & 🦝 </div>
+        <div class="credit github-code">
+            <p>Source code at: </p><a title="Github" href="https://github.com/Warnstrom" target="_blank"
+                rel="noopener noreferrer">
+                <svg class="github-logo" role="img" width="20" height="20" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <title>Github</title>
+                    <path
+                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                </svg>
+            </a>
+        </div>
+    </main>
+    <script type="text/javascript" src="js/tsparticles.bundle.min.js"></script>
+    <script>
+        const emojis = [{
+            type: "🕸️",
+            chance: 0
+        }, {
+            type: "👻",
+            chance: 30
+        }, {
+            type: "🎃",
+            chance: 30
+        }, {
+            type: "🦝",
+            chance: 1
+        },
+        {
+            type: "😸",
+            chance: 5
+        }];
+        let usedNumbers = [];
+        let checkedItems = []
+        const phrases = ["Jävlar", "Easy!", "Sluta!", "I'm scared", "We're fine!",
+            "Woah", "You lil' shit", "Aha!", "Vad är det?", "I'm so confused...",
+            "Oh my god", "Kom då", "Really?", "Where am I?", "Men näääee", "Nej!",
+            "What am I supposed to do?", "Oj!",
+            "Stop it", "Oh goodness gracious", "Look at that!", "I can do this", "This is terrifying.",
+            "That was so not fair!", "Va?!"];
+        window.onload = () => {
+            particles.pause();
+            createGame()
+        };
+        const randomNumber = (min, max) => {
+            return Math.floor(Math.random() * (max - min + 1) + min)
+        }
+
+        const checkDiagonal = (items) => {
+            let diagonal_left_right = [{ row: 0, column: 0 }, { row: 1, column: 1 }, { row: 2, column: 2 }, { row: 3, column: 3 }, { row: 4, column: 4 },]
+            let diagonal_right_left = [{ row: 0, column: 4 }, { row: 1, column: 3 }, { row: 2, column: 2 }, { row: 3, column: 1 }, { row: 4, column: 0 },]
+
+            let LR_i = 0;
+            let RL_i = 0;
+
+            for (const newItem of diagonal_left_right) {
+                items.map(item => {
+                    if (item.row === newItem.row && item.column === newItem.column) {
+                        LR_i++;
+                    }
+                })
+            }
+            for (const newItem of diagonal_right_left) {
+                items.map(item => {
+                    if (item.row === newItem.row && item.column === newItem.column) {
+                        RL_i++;
+                    }
+                })
+            }
+            if (LR_i === 5 || RL_i === 5) {
+                return true;
+            }
+        }
+        const reset = () => {
+            usedNumbers = []
+            checkedItems = []
+            let bingoWinDiv = document.getElementById("win");
+            bingoWinDiv.style.visibility = "hidden";
+            particles.stop();
+            const bingoGrid = document.getElementById('bingo-grid');
+            removeChilds(bingoGrid)
+            createGame()
+        }
+
+        const removeChilds = (parent) => {
+            while (parent.lastChild) {
+                parent.removeChild(parent.lastChild);
+            }
+        };
+
+
+        const createGame = () => {
+            if (usedNumbers.length === 0) {
+                generateBingoCards();
+            }
+        }
+
+
+        const getRandomEmoji = () => {
+            const filler = 100 - emojis.map(r => r.chance).reduce((sum, current) => sum + current);
+
+            if (filler <= 0) {
+                console.log("chances sum is higher than 100!");
+                return;
+            }
+
+            let probability = emojis.map((r, i) => Array(r.chance === 0 ? filler : r.chance).fill(i)).reduce((c, v) => c.concat(v), []);
+            let pIndex = Math.floor(Math.random() * 100);
+            const rarity = emojis[probability[pIndex]];
+
+            return rarity.type;
+        }
+
+        const generateBingoCards = () => {
+
+            let row = 0;
+            let column = 0;
+            let bingo = false;
+            for (let i = 0; i < phrases.length;) {
+                let n = randomNumber(0, 24)
+                if (usedNumbers.includes(n)) {
+                    n = randomNumber(0, 24)
+                } else {
+                    usedNumbers.push(n)
+                    const checked = document.createElement("span")
+                    const bingoItem = document.createElement("button");
+                    bingoItem.id = `${n}-${row}-${column}`;
+                    bingoItem.className = "grid-item";
+                    bingoItem.innerText = `${phrases[n]}`;
+                    bingoItem.onclick = () => {
+                        const checkedDIV = bingoItem.children[0];
+                        if (checkedDIV.className === "checked") {
+                            checkedDIV.innerHTML = ``
+                            checkedDIV.className = ""
+                            checkedItems.pop()
+                        } else {
+                            let rNumber = randomNumber(0, 4);
+                            checkedDIV.innerHTML = `${getRandomEmoji()}`;
+                            checkedDIV.className = "checked"
+                            let bingoId = bingoItem.id.split("-")
+                            checkedItems.push({ row: Number(bingoId[1]), column: Number(bingoId[2]) })
+                            const rowCount = checkedItems.filter((obj) => Number(obj.row) === Number(bingoId[1])).length;
+                            const columnCount = checkedItems.filter((obj) => Number(obj.column) === Number(bingoId[2])).length;
+                            if ((rowCount === 5 || columnCount === 5 || checkDiagonal(checkedItems)) && bingo === false) {
+                                let bingoWinDiv = document.getElementById("win");
+                                bingoWinDiv.children[0].classList.add("gentle-tilt-move-shake");
+                                bingoWinDiv.style.visibility = "visible";
+                                bingo = true;
+                                particles.refresh();
+                            }
+                        }
+                    };
+                    bingoItem.appendChild(checked)
+                    const bingoGrid = document.getElementById("bingo-grid");
+                    bingoGrid.appendChild(bingoItem)
+                    if (row === 4) {
+                        row = 0;
+                        column++;
+                    } else {
+                        row++;
+                    }
+                    i++;
+                }
+            }
+        }
+        tsParticles.load("tsparticles", {
+            fullScreen: {
+                zIndex: 1,
+            },
+            emitters: [
+                {
+                    position: {
+                        x: 0,
+                        y: 30,
+                    },
+                    rate: {
+                        quantity: 5,
+                        delay: 0.15,
+                    },
+                    particles: {
+                        move: {
+                            direction: "top-right",
+                            outModes: {
+                                top: "none",
+                                left: "none",
+                                default: "destroy",
+                            },
+                        },
+                    },
+                },
+                {
+                    position: {
+                        x: 100,
+                        y: 30,
+                    },
+                    rate: {
+                        quantity: 5,
+                        delay: 0.15,
+                    },
+                    particles: {
+                        move: {
+                            direction: "top-left",
+                            outModes: {
+                                top: "none",
+                                right: "none",
+                                default: "destroy",
+                            },
+                        },
+                    },
+                },
+            ],
+            particles: {
+                color: {
+                    value: ["#f21b1d", "#24bcf4", "#ffdd31", "#b48cb7", "#d7ee44", "#FFF"],
+                },
+                move: {
+                    decay: 0.05,
+                    direction: "top",
+                    enable: true,
+                    gravity: {
+                        enable: true,
+                    },
+                    outModes: {
+                        top: "none",
+                        default: "destroy",
+                    },
+                    speed: {
+                        min: 10,
+                        max: 30,
+                    },
+                },
+                number: {
+                    value: 0,
+                },
+                opacity: {
+                    value: 1,
+                },
+                rotate: {
+                    value: {
+                        min: 0,
+                        max: 360,
+                    },
+                    direction: "random",
+                    animation: {
+                        enable: true,
+                        speed: 30,
+                    },
+                },
+                tilt: {
+                    direction: "random",
+                    enable: true,
+                    value: {
+                        min: 0,
+                        max: 360,
+                    },
+                    animation: {
+                        enable: true,
+                        speed: 30,
+                    },
+                },
+                size: {
+                    value: {
+                        min: 2,
+                        max: 5,
+                    },
+                    animation: {
+                        enable: true,
+                        startValue: "min",
+                        count: 1,
+                        speed: 16,
+                        sync: true,
+                    },
+                },
+                roll: {
+                    darken: {
+                        enable: true,
+                        value: 25,
+                    },
+                    enable: true,
+                    speed: {
+                        min: 5,
+                        max: 15,
+                    },
+                },
+                wobble: {
+                    distance: 30,
+                    enable: true,
+                    speed: {
+                        min: -7,
+                        max: 7,
+                    },
+                },
+                shape: {
+                    type: "circle",
+                    options: {},
+                },
+            },
+        });
+
+        // now you can control the animations too, it's possible to pause and resume the animations
+        // these methods don't change the config so you're safe with all your configurations
+        // domItem(0) returns the first tsParticles instance loaded in the dom
+        const particles = tsParticles.domItem(0);
+
+        // play will start the animations, if the move is not enabled it won't enable it, it just updates the frame
+
+
+    </script>
+</body>
+
+</html>
