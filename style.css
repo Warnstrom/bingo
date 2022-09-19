@@ -1,0 +1,209 @@
+@font-face {
+    font-family: "title-font-creepster";
+    src: url("./fonts/CHILLER.TTF");
+}
+
+@font-face {
+    font-family: "grid-item-font-chiller";
+    src: url("./fonts/creepster.regular.ttf");
+}
+
+body {
+    margin: 0;
+    background-image: url("./images/background_halloween.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+main {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+section {
+    height: 80vh;
+    width: 65vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.bingo-title {
+    display: flex;
+    justify-content: center;
+}
+
+.bingo-title>h1 {
+    margin: 0;
+    font-size: 100px;
+    color: #751916;
+    text-shadow: -1px 0 #ffe78a, 0 1px #ffe78a, 1px 0 #ffe78a, 0 -1px #ffe78a;
+    font-family: "grid-item-font-chiller";
+}
+
+#bingo-grid {
+    height: 90%;
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: repeat(5, 20%);
+    padding: 5px;
+    background-color: #ab0200;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.grid-item {
+    font-family: "grid-item-font-chiller";
+    color: #ab0200;
+    background-color: #ffe78a;
+    border: 1px solid #ab0200;
+    font-size: 30px;
+    text-align: center;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checked {
+    transition: ease-in .08s;
+    font-size: 100px;
+    color: rgb(218, 166, 26);
+    position: absolute;
+    z-index: 1;
+    opacity: 0.9;
+}
+
+.bingo-win {
+    font-family: "grid-item-font-chiller";
+    font-size: 50px;
+    color: #751916;
+    position: absolute;
+    z-index: 1;
+    width: inherit;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+
+.bingo-win>h1.gentle-tilt-move-shake {
+    animation: tilt-n-move-shaking 0.25s infinite;
+}
+
+svg {
+    transition: transform .5s ease-in-out;
+}
+
+svg:hover {
+    transform: rotate(360deg);
+}
+
+.reset-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    border: none;
+    font-size: 30px;
+    padding: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #751916;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.credit {
+    color: #fff;
+    text-shadow: -1px 0 rgba(0, 0, 0, 0.486), 0 1px rgba(0, 0, 0, 0.486), 1px 0 rgba(0, 0, 0, 0.486), 0 -1px rgba(0, 0, 0, 0.486);
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.github-logo {
+    margin: 2px;
+}
+
+.github-code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes tilt-n-move-shaking {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(5px, 5px) rotate(5deg);
+    }
+
+    50% {
+        transform: translate(0, 0) rotate(0eg);
+    }
+
+    75% {
+        transform: translate(-5px, 5px) rotate(-5deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    section {
+        width: 100vw;
+    }
+
+    .bingo-title>h1 {
+        font-size: 50px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .checked {
+        font-size: 80px;
+
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .bingo-title>h1 {
+        font-size: 30px;
+    }
+
+    .grid-item {
+        font-size: 20px;
+    }
+
+    .checked {
+        font-size: 70px;
+
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .checked {
+        font-size: 50px;
+
+    }
+}
