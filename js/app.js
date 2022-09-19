@@ -52,7 +52,7 @@ const emojis = [
 ];
 
 window.onload = () => {
-  particles.pause();
+  particles.stop();
   createGame();
 };
 const randomNumber = (min, max) => {
@@ -150,8 +150,7 @@ const generateBingoCards = async () => {
       const bingoItem = document.createElement("button");
       bingoItem.id = `${n}-${row}-${column}`;
       bingoItem.className = "grid-item";
-      //bingoItem.innerText = `${phrases[n]}`;
-      bingoItem.innerText = `${row}-${column}`;
+      bingoItem.innerText = `${phrases[n]}`;
       bingoItem.onclick = () => {
         const bingoId = bingoItem.id.split("-");
         const columnId = parseInt(bingoId[1]);
@@ -280,8 +279,8 @@ tsParticles.load("tsparticles", {
         default: "destroy",
       },
       speed: {
-        min: 10,
-        max: 30,
+        min: 50,
+        max: 100,
       },
     },
     number: {
@@ -322,7 +321,7 @@ tsParticles.load("tsparticles", {
         enable: true,
         startValue: "min",
         count: 1,
-        speed: 16,
+        speed: 25,
         sync: true,
       },
     },
