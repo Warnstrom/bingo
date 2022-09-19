@@ -52,6 +52,7 @@ const emojis = [
 ];
 
 window.onload = () => {
+
   particles.stop();
   createGame();
 };
@@ -279,8 +280,8 @@ tsParticles.load("tsparticles", {
         default: "destroy",
       },
       speed: {
-        min: 50,
-        max: 100,
+        min: window.outerWidth < 800 ? 20 : 50,
+        max: window.outerWidth < 800 ? 50 : 100,
       },
     },
     number: {

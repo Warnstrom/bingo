@@ -102,6 +102,7 @@ span {
 .bingo-win>h1.gentle-tilt-move-shake {
     animation: tilt-n-move-shaking 0.25s infinite;
     color: #f7630c;
+    letter-spacing: 4px;
     text-shadow: -3px 3px 0 #ab0200,
         3px 3px 0 #ab0200,
         3px -3px 0 #ab0200,
