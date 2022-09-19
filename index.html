@@ -192,6 +192,13 @@
         }
     }
 
+    @media only screen and (max-width: 700px) {
+        .checked {
+            font-size: 80px;
+
+        }
+    }
+
     @media only screen and (max-width: 500px) {
         .bingo-title>h1 {
             font-size: 30px;
@@ -241,7 +248,7 @@
         </section>
         <div class="credit">Made with ☕️ & ❤️ by Chayze & 🦝 </div>
         <div class="credit github-code">
-            <p>Source code at: </p><a title="Github" href="https://github.com/Warnstrom" target="_blank"
+            <p>Source code at: </p><a title="Github" href="https://github.com/Warnstrom/bingo" target="_blank"
                 rel="noopener noreferrer">
                 <svg class="github-logo" role="img" width="20" height="20" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
@@ -259,10 +266,10 @@
             chance: 0
         }, {
             type: "👻",
-            chance: 30
+            chance: 40
         }, {
             type: "🎃",
-            chance: 30
+            chance: 40
         }, {
             type: "🦝",
             chance: 1
@@ -271,8 +278,10 @@
             type: "😸",
             chance: 5
         }];
+
         let usedNumbers = [];
-        let checkedItems = []
+        let checkedItems = [];
+        let bingo = false;
         const phrases = ["Jävlar", "Easy!", "Sluta!", "I'm scared", "We're fine!",
             "Woah", "You lil' shit", "Aha!", "Vad är det?", "I'm so confused...",
             "Oh my god", "Kom då", "Really?", "Where am I?", "Men näääee", "Nej!",
@@ -309,7 +318,8 @@
                 })
             }
             if (LR_i === 5 || RL_i === 5) {
-                return true;
+                bingo = true;
+                win();
             }
         }
         const reset = () => {
@@ -353,10 +363,24 @@
         }
 
         const generateBingoCards = () => {
-
+            const rowLookup = [{
+                row: 0,
+                columns: 0
+            }, {
+                row: 1,
+                columns: 0
+            }, {
+                row: 2,
+                columns: 0
+            }, {
+                row: 3,
+                columns: 0
+            }, {
+                row: 4,
+                columns: 0
+            }]
             let row = 0;
             let column = 0;
-            let bingo = false;
             for (let i = 0; i < phrases.length;) {
                 let n = randomNumber(0, 24)
                 if (usedNumbers.includes(n)) {
@@ -367,29 +391,41 @@
                     const bingoItem = document.createElement("button");
                     bingoItem.id = `${n}-${row}-${column}`;
                     bingoItem.className = "grid-item";
-                    bingoItem.innerText = `${phrases[n]}`;
+                    //bingoItem.innerText = `${phrases[n]}`;
+                    bingoItem.innerText = `${row}-${column}`;
                     bingoItem.onclick = () => {
+                        let bingoId = bingoItem.id.split("-")
+                        let columnId = parseInt(bingoId[1]);
+                        let rowId = parseInt(bingoId[2]);
                         const checkedDIV = bingoItem.children[0];
                         if (checkedDIV.className === "checked") {
                             checkedDIV.innerHTML = ``
                             checkedDIV.className = ""
-                            checkedItems.pop()
+                            const indexOfObject = checkedItems.findIndex(object => {
+                                return object.row === rowId && object.column === columnId;
+                            });
+                            checkedItems.splice(indexOfObject, 1)
+                            for (const item of rowLookup) {
+                                if (item.row === rowId) {
+                                    item.columns--;
+                                }
+                            }
                         } else {
-                            let rNumber = randomNumber(0, 4);
+                            checkedItems.push({ row: rowId, column: columnId })
+                            const rNumber = randomNumber(0, 4);
                             checkedDIV.innerHTML = `${getRandomEmoji()}`;
                             checkedDIV.className = "checked"
-                            let bingoId = bingoItem.id.split("-")
-                            checkedItems.push({ row: Number(bingoId[1]), column: Number(bingoId[2]) })
-                            const rowCount = checkedItems.filter((obj) => Number(obj.row) === Number(bingoId[1])).length;
-                            const columnCount = checkedItems.filter((obj) => Number(obj.column) === Number(bingoId[2])).length;
-                            if ((rowCount === 5 || columnCount === 5 || checkDiagonal(checkedItems)) && bingo === false) {
-                                let bingoWinDiv = document.getElementById("win");
-                                bingoWinDiv.children[0].classList.add("gentle-tilt-move-shake");
-                                bingoWinDiv.style.visibility = "visible";
-                                bingo = true;
-                                particles.refresh();
+                            for (const item of rowLookup) {
+                                if (item.row === rowId) {
+                                    item.columns++;
+                                    if (item.columns === 5) {
+                                        bingo = true;
+                                        win();
+                                    }
+                                }
                             }
                         }
+                        checkDiagonal(checkedItems)
                     };
                     bingoItem.appendChild(checked)
                     const bingoGrid = document.getElementById("bingo-grid");
@@ -402,6 +438,16 @@
                     }
                     i++;
                 }
+            }
+        }
+
+        const win = () => {
+            if (bingo != false) {
+                let bingoWinDiv = document.getElementById("win");
+                bingoWinDiv.children[0].classList.add("gentle-tilt-move-shake");
+                bingoWinDiv.style.visibility = "visible";
+                bingo = true;
+                particles.refresh();
             }
         }
         tsParticles.load("tsparticles", {
