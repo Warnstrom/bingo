@@ -16,25 +16,41 @@
 <body>
     <div id="tsparticles"></div>
     <main>
-        <section>
+        <section id="bingo">
             <div class="bingo-title">
+                <div class="dropdown">
+                    <button onclick="toggleDropdown()" class="dropbtn">Themes</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <button onclick="switchTheme(`default`)">Default</button>
+                        <button onclick="switchTheme(`halloween`)">Halloween</button>
+                        <button onclick="switchTheme(`christmas`)">Christmas</button>
+
+                    </div>
+                </div>
                 <h1>🎃 Secret stream bingo 👻</h1>
             </div>
             <div id="bingo-grid">
             </div>
             <div id="win" class="bingo-win">
-                <h1>Bingo!</h1>
-                <button class="reset-button" role="button" onclick="reset()">
-                    <span><svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor"
-                            class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" fill="white"></path>
-                            <path
-                                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"
-                                fill="white"></path>
-                        </svg>
-                    </span>
-                </button>
+                <div class="bingo-container">
+                    <h1>Bingo!</h1>
+                    <p>bingo answers</p>
+                    <div id="answers" class="bingo-answers">
+                    </div>
+                    <button class="reset-button" role="button" onclick="reset()">
+                        <span><svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor"
+                                class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" fill="white">
+                                </path>
+                                <path
+                                    d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"
+                                    fill="white"></path>
+                            </svg>
+                        </span>
+                    </button>
+
+                </div>
             </div>
         </section>
         <div class="credit">Made with ☕️ & ❤️ by Chayze & 🦝 </div>
@@ -53,4 +69,5 @@
     <script type="text/javascript" src="js/tsparticles.bundle.min.js"></script>
     <script async type="text/javascript" src="js/app.js"></script>
 </body>
+
 </html>

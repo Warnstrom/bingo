@@ -1,16 +1,16 @@
 @font-face {
-    font-family: "title-font-creepster";
-    src: url("./fonts/CHILLER.TTF");
+    font-family: "theme-christmas-font";
+    src: url("./fonts/christmas.ttf");
 }
 
 @font-face {
-    font-family: "grid-item-font-chiller";
+    font-family: "theme-halloween-font";
     src: url("./fonts/creepster.regular.ttf");
 }
 
 body {
     margin: 0;
-    background-image: url("./images/background_halloween.jpg");
+    background-image: var(--background-image);
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -22,6 +22,46 @@ main {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.dropbtn {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--grid-background);
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover,
+.dropbtn:focus {
+    background-color: #2980B9;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown button:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
 }
 
 section {
@@ -39,10 +79,10 @@ section {
 
 .bingo-title>h1 {
     margin: 0;
-    font-size: 5vw;
-    color: #751916;
+    font-size: 3em;
+    color: var(--primary-dark-text);
     text-shadow: 3px 4px 7px rgba(81, 67, 21, 0.7);
-    font-family: "grid-item-font-chiller";
+    font-family: var(--primary-font);
 }
 
 #bingo-grid {
@@ -51,16 +91,16 @@ section {
     grid-template-columns: repeat(5, 20%);
     grid-template-rows: repeat(5, 20%);
     padding: 5px;
-    background-color: #ab0200;
+    background-color: var(--primary-text);
     border-radius: 10px;
     margin: 5px;
 }
 
 .grid-item {
-    font-family: "grid-item-font-chiller";
-    color: #ab0200;
-    background-color: #ffe78a;
-    border: 1px solid #ab0200;
+    font-family: var(--primary-font);
+    color: var(--primary-text);
+    background-color: var(--grid-background);
+    border: 1px solid var(--grid-border);
     text-shadow: 2px 2px 2px rgb(53, 44, 14, 0.5);
     font-size: 30px;
     text-align: center;
@@ -79,34 +119,64 @@ span {
 .checked {
     transition: ease-in .08s;
     font-size: 100px;
-    color: rgb(218, 166, 26);
     position: absolute;
     z-index: 1;
     opacity: 0.9;
 }
 
 .bingo-win {
-    font-family: "grid-item-font-chiller";
+    font-family: var(--primary-font);
     font-size: 50px;
     position: absolute;
     z-index: 1;
     width: inherit;
     height: inherit;
+    visibility: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    visibility: hidden;
 }
 
-.bingo-win>h1.gentle-tilt-move-shake {
+.bingo-container {
+    padding: 20px;
+    background-color: var(--container-background);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    border-radius: 8px;
+}
+
+.bingo-answers {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-shrink: 3;
+    max-width: 50vw;
+}
+
+.bingo-answer-child {
+    font-size: 25px;
+    margin: 5px;
+    padding: 5px;
+    color: white;
+    background-color: var(--secondary-text);
+    border-radius: 8px;
+
+}
+
+.bingo-container>h1.gentle-tilt-move-shake {
     animation: tilt-n-move-shaking 0.25s infinite;
-    color: #f7630c;
+    color: var(--secondary-text);
     letter-spacing: 4px;
-    text-shadow: -3px 3px 0 #ab0200,
-        3px 3px 0 #ab0200,
-        3px -3px 0 #ab0200,
-        -3px -3px 0 #ab0200;
+    text-shadow: -3px 3px 0 var(--primary-text),
+        3px 3px 0 var(--primary-text),
+        3px -3px 0 var(--primary-text),
+        -3px -3px 0 var(--primary-text);
 }
 
 svg {
@@ -210,4 +280,40 @@ svg:hover {
         font-size: 50px;
 
     }
+}
+
+html {
+    --background-image: none;
+    --primary-font: 'Roboto', sans-serif;
+    --primary-text: #2b3d49;
+    --primary-dark-text: #751916;
+    --secondary-text: #2b3d49;
+    --container-background: #dfd1c5;
+    --grid-background: #efefef;
+    --grid-text: var(--primary-dark-text);
+    --grid-border: var(--primary-dark-text);
+}
+
+html[data-theme="halloween"] {
+    --background-image: url("./images/background_halloween.jpg");
+    --primary-font: "theme-halloween-font";
+    --primary-text: #ab0200;
+    --primary-dark-text: #751916;
+    --secondary-text: #f7630c;
+    --grid-background: #ffe78a;
+    --container-background: #113721;
+    --grid-text: var(--primary-dark-text);
+    --grid-border: var(--primary-dark-text);
+}
+
+html[data-theme="christmas"] {
+    --background-image: url("./images/background_christmas.jpg");
+    --primary-text: white;
+    --primary-font: "theme-christmas-font";
+    --primary-dark-text: #b41d24;
+    --secondary-text: #446759;
+    --container-background: #113721;
+    --grid-background: #b41d24;
+    --grid-text: #446759;
+    --grid-border: #113721;
 }
