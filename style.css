@@ -53,6 +53,8 @@
   .dropdown-content {
     display: none;
     position: absolute;
+    border-radius: 8px;
+    margin: 1px;
     background-color: #f1f1f1;
     min-width: 160px;
     overflow: auto;
@@ -60,22 +62,14 @@
     z-index: 1;
   }
   
-  .dropdown-content button {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown button:hover {
-    background-color: #ddd;
-  }
-  
   .show {
     display: block;
   }
   
   section {
+    border: 3px solid black;
+    border-radius: 8px;
+    background-color: white;
     height: 80vh;
     width: 65vw;
     display: flex;
@@ -85,7 +79,7 @@
   
   .bingo-title {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
   }
   
   .bingo-title > h1 {
@@ -102,7 +96,6 @@
     grid-template-columns: repeat(5, 20%);
     grid-template-rows: repeat(5, 20%);
     padding: 5px;
-    background-color: var(--primary-text);
     border-radius: 10px;
     margin: 5px;
   }
@@ -195,7 +188,25 @@ svg:hover {
     transform: rotate(360deg);
 }
 
-.reset-button {
+.dropdownButton {
+    margin: 0;
+    padding: 12px 16px;
+    font-family: var(--primary-font);
+    background-color: #751916;
+    text-decoration: none;
+    color: white;
+    border: none;
+    width: 100%;
+    display: block;
+}
+
+.dropdownButton:hover {
+    cursor: pointer;
+    background-color: #460806;
+}
+
+.reset-button, .theme-button {
+    font-family: var(--primary-font);
     display: inline-block;
     position: relative;
     overflow: hidden;

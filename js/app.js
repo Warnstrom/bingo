@@ -88,15 +88,15 @@ const getRandomEmoji = () => {
 };
 
 const toggleDropdown = () => {
-  document.getElementById("myDropdown").classList.toggle("show");
+  document.getElementById("themes").classList.toggle("show");
 };
 
 const switchTheme = (theme) => {
   document.documentElement.setAttribute("data-theme", theme);
 };
 window.onclick = function (event) {
-  if (!event.target.matches(".dropbtn")) {
-    document.getElementById("myDropdown").classList.remove("show");
+  if (!event.target.matches(".theme-button")) {
+    document.getElementById("themes").classList.remove("show");
   }
 };
 

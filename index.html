@@ -19,15 +19,18 @@
         <section id="bingo">
             <div class="bingo-title">
                 <div class="dropdown">
-                    <button onclick="toggleDropdown()" class="dropbtn">Themes</button>
-                    <div id="myDropdown" class="dropdown-content">
-                        <button onclick="switchTheme(`default`)">Default</button>
-                        <button onclick="switchTheme(`halloween`)">Halloween</button>
-                        <button onclick="switchTheme(`christmas`)">Christmas</button>
+                    <button onclick="toggleDropdown()" class="theme-button">Themes</button>
+                    <div id="themes" class="dropdown-content">
+                        <button class="dropdownButton" onclick="switchTheme(`default`)">Default</button>
+                        <button class="dropdownButton" onclick="switchTheme(`halloween`)">Halloween</button>
+                        <button class="dropdownButton" onclick="switchTheme(`christmas`)">Christmas</button>
 
                     </div>
                 </div>
                 <h1>🎃 Secret stream bingo 👻</h1>
+                <button class="reset-button" role="button" onclick="reset()">
+                    reset
+                </button>
             </div>
             <div id="bingo-grid">
             </div>
