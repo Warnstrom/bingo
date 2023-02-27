@@ -1,45 +1,56 @@
-@font-face {
+:root {
+    --primary-font: 'Roboto', sans-serif;
+    --background-image: url("./img/background.jpg");
+    --grid-background: #1a1a1a;
+    --grid-border: #6b6b6b;
+    --primary-text: #f5f5f5;
+    --secondary-text: #751916;
+    --primary-dark-text: #7f0000;
+    --container-background: rgba(0, 0, 0, 0.7);
+  }
+  
+  @font-face {
     font-family: "theme-christmas-font";
     src: url("./fonts/christmas.ttf");
-}
-
-@font-face {
+  }
+  
+  @font-face {
     font-family: "theme-halloween-font";
     src: url("./fonts/creepster.regular.ttf");
-}
-
-body {
+  }
+  
+  body {
     margin: 0;
     background-image: var(--background-image);
     background-repeat: no-repeat;
-    background-size: 100% 100%;
-}
-
-main {
+    background-size: cover;
+  }
+  
+  main {
     height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-
-.dropbtn {
-    font-family: 'Roboto', sans-serif;
+  }
+  
+  .dropbtn {
+    font-family: var(--primary-font);
     background-color: var(--grid-background);
-    color: white;
+    color: var(--primary-text);
     padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
-}
-
-.dropbtn:hover,
-.dropbtn:focus {
+  }
+  
+  .dropbtn:hover,
+  .dropbtn:focus {
     background-color: #2980B9;
-}
-
-.dropdown-content {
+  }
+  
+  .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
@@ -47,45 +58,45 @@ main {
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-}
-
-.dropdown-content button {
+  }
+  
+  .dropdown-content button {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-}
-
-.dropdown button:hover {
+  }
+  
+  .dropdown button:hover {
     background-color: #ddd;
-}
-
-.show {
+  }
+  
+  .show {
     display: block;
-}
-
-section {
+  }
+  
+  section {
     height: 80vh;
     width: 65vw;
     display: flex;
     justify-content: center;
     flex-direction: column;
-}
-
-.bingo-title {
+  }
+  
+  .bingo-title {
     display: flex;
     justify-content: center;
-}
-
-.bingo-title>h1 {
+  }
+  
+  .bingo-title > h1 {
     margin: 0;
     font-size: 3em;
     color: var(--primary-dark-text);
     text-shadow: 3px 4px 7px rgba(81, 67, 21, 0.7);
     font-family: var(--primary-font);
-}
-
-#bingo-grid {
+  }
+  
+  #bingo-grid {
     height: 90%;
     display: grid;
     grid-template-columns: repeat(5, 20%);
@@ -94,9 +105,9 @@ section {
     background-color: var(--primary-text);
     border-radius: 10px;
     margin: 5px;
-}
-
-.grid-item {
+  }
+  
+  .grid-item {
     font-family: var(--primary-font);
     color: var(--primary-text);
     background-color: var(--grid-background);
@@ -108,7 +119,7 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+  }
 
 span {
     display: flex;
@@ -117,16 +128,14 @@ span {
 }
 
 .checked {
-    transition: ease-in .08s;
-    font-size: 100px;
     position: absolute;
     z-index: 1;
     opacity: 0.9;
+    font-size: 100px;
+    transition: ease-in .08s;
 }
 
 .bingo-win {
-    font-family: var(--primary-font);
-    font-size: 50px;
     position: absolute;
     z-index: 1;
     width: inherit;
@@ -136,47 +145,46 @@ span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: var(--primary-font);
+    font-size: 50px;
 }
 
 .bingo-container {
-    padding: 20px;
-    background-color: var(--container-background);
-    color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 20px;
     width: auto;
+    background-color: var(--container-background);
+    color: white;
     border-radius: 8px;
 }
 
 .bingo-answers {
     display: flex;
-    flex-direction: row;
     justify-content: center;
+    align-items: center;
+    flex-direction: row;
     flex-wrap: wrap;
     flex-shrink: 3;
     max-width: 50vw;
 }
 
 .bingo-answer-child {
-    font-size: 25px;
     margin: 5px;
     padding: 5px;
+    font-size: 25px;
     color: white;
     background-color: var(--secondary-text);
     border-radius: 8px;
-
 }
 
 .bingo-container>h1.gentle-tilt-move-shake {
-    animation: tilt-n-move-shaking 0.25s infinite;
     color: var(--secondary-text);
     letter-spacing: 4px;
-    text-shadow: -3px 3px 0 var(--primary-text),
-        3px 3px 0 var(--primary-text),
-        3px -3px 0 var(--primary-text),
-        -3px -3px 0 var(--primary-text);
+    text-shadow: -3px 3px 0 var(--primary-text), 3px 3px 0 var(--primary-text), 3px -3px 0 var(--primary-text), -3px -3px 0 var(--primary-text);
+    animation: tilt-n-move-shaking 0.25s infinite;
 }
 
 svg {
@@ -188,25 +196,30 @@ svg:hover {
 }
 
 .reset-button {
+    display: inline-block;
     position: relative;
     overflow: hidden;
-    display: inline-block;
-    border: none;
     font-size: 30px;
     padding: 15px;
+    background-color: #751916;
+    color: white;
+    border: none;
+    border-radius: 8px;
     text-decoration: none;
     cursor: pointer;
-    background-color: #751916;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px
 }
 
 .credit {
     color: #fff;
-    text-shadow: -1px 0 rgba(0, 0, 0, 0.486), 0 1px rgba(0, 0, 0, 0.486), 1px 0 rgba(0, 0, 0, 0.486), 0 -1px rgba(0, 0, 0, 0.486);
+    text-shadow:
+        -1px 0 rgba(0, 0, 0, 0.486),
+        0 1px rgba(0, 0, 0, 0.486),
+        1px 0 rgba(0, 0, 0, 0.486),
+        0 -1px rgba(0, 0, 0, 0.486);
     font-family: 'Roboto', sans-serif;
     display: flex;
     align-items: flex-end;
@@ -223,6 +236,40 @@ svg:hover {
     justify-content: center;
 }
 
+/* Media queries */
+@media only screen and (max-width: 800px) {
+    section {
+        width: 100vw;
+    }
+
+    .bingo-title>h1 {
+        font-size: 7vw;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .checked {
+        font-size: 80px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .grid-item {
+        font-size: 20px;
+    }
+
+    .checked {
+        font-size: 70px;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .checked {
+        font-size: 50px;
+    }
+}
+
+/* Keyframes */
 @keyframes tilt-n-move-shaking {
     0% {
         transform: translate(0, 0) rotate(0deg);
@@ -245,43 +292,6 @@ svg:hover {
     }
 }
 
-@media only screen and (max-width: 800px) {
-    section {
-        width: 100vw;
-    }
-
-    .bingo-title>h1 {
-        font-size: 7vw;
-    }
-
-}
-
-@media only screen and (max-width: 700px) {
-    .checked {
-        font-size: 80px;
-
-    }
-}
-
-@media only screen and (max-width: 500px) {
-
-    .grid-item {
-        font-size: 20px;
-    }
-
-    .checked {
-        font-size: 70px;
-
-    }
-}
-
-@media only screen and (max-width: 380px) {
-    .checked {
-        font-size: 50px;
-
-    }
-}
-
 html {
     --background-image: none;
     --primary-font: 'Roboto', sans-serif;
@@ -297,23 +307,23 @@ html {
 html[data-theme="halloween"] {
     --background-image: url("./images/background_halloween.jpg");
     --primary-font: "theme-halloween-font";
-    --primary-text: #ab0200;
-    --primary-dark-text: #751916;
-    --secondary-text: #f7630c;
-    --grid-background: #ffe78a;
-    --container-background: #113721;
+    --primary-text: #ff5722;
+    --primary-dark-text: #4b2c20;
+    --secondary-text: #ffd700;
+    --grid-background: #2f4f4f;
+    --container-background: #191970;
     --grid-text: var(--primary-dark-text);
     --grid-border: var(--primary-dark-text);
 }
 
 html[data-theme="christmas"] {
     --background-image: url("./images/background_christmas.jpg");
-    --primary-text: white;
+    --primary-text: #ffffff;
     --primary-font: "theme-christmas-font";
-    --primary-dark-text: #b41d24;
-    --secondary-text: #446759;
-    --container-background: #113721;
-    --grid-background: #b41d24;
-    --grid-text: #446759;
-    --grid-border: #113721;
+    --primary-dark-text: #c62828;
+    --secondary-text: #4caf50;
+    --container-background: #0d47a1;
+    --grid-background: #c62828;
+    --grid-text: #4caf50;
+    --grid-border: #1b531c;
 }

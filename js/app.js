@@ -32,27 +32,27 @@ const phrases = [
   "Va?!",
 ];
 
-const emojis = [
+const EMOJIS = [
   {
     type: {
       christmas: "❄️",
       halloween: "🕸️",
     },
-    chance: 0,
+    chance: 5,
   },
   {
     type: {
       christmas: "🎄",
       halloween: "👻",
     },
-    chance: 40,
+    chance: 45,
   },
   {
     type: {
       christmas: "☃️",
       halloween: "🎃",
     },
-    chance: 40,
+    chance: 45,
   },
   {
     type: {
@@ -66,24 +66,26 @@ const emojis = [
       christmas: "🦌",
       halloween: "🦌",
     },
-    chance: 5,
+    chance: 4,
   },
 ];
 
 const getRandomEmoji = () => {
   const theme = document.documentElement.getAttribute("data-theme");
-  const filler = 100 - emojis.map((r) => r.chance).reduce((sum, current) => sum + current);
 
-  if (filler <= 0) {
-    console.log("chances sum is higher than 100!");
+  const totalChance = EMOJIS.reduce((sum, { chance }) => sum + chance, 0);
+  if (totalChance !== 100) {
+    console.log("Chances sum is not equal to 100!");
     return;
   }
 
-  let probability = emojis.map((r, i) => Array(r.chance === 0 ? filler : r.chance).fill(i)).reduce((c, v) => c.concat(v), []);
-  let pIndex = Math.floor(Math.random() * 100);
-  const rarity = emojis[probability[pIndex]];
-
-  return rarity.type[theme] === undefined ? "🤓" : rarity.type[theme];
+  const probability = EMOJIS.flatMap(({ chance }, index) =>
+    Array(chance).fill(index)
+  );
+  const index = Math.floor(Math.random() * probability.length);
+  const rarity = EMOJIS[probability[index]];
+  console.log(rarity.type[theme])
+  return rarity.type[theme] ?? "🤓";
 };
 
 const toggleDropdown = () => {
@@ -93,7 +95,6 @@ const toggleDropdown = () => {
 const switchTheme = (theme) => {
   document.documentElement.setAttribute("data-theme", theme);
 };
-
 window.onclick = function (event) {
   if (!event.target.matches(".dropbtn")) {
     document.getElementById("myDropdown").classList.remove("show");
