@@ -369,24 +369,35 @@ const generateBingoCards = async () => {
 };
 
 const win = () => {
+  // Get cards from local storage
   const cards = JSON.parse(localStorage.getItem("cards"));
-  console.log(cards);
-  if (bingo != false) {
-    let bingoAnswerDiv = document.getElementById("answers");
-    for (let i = 0; i < cards.length; i++) {
-      if (cards[i].checked.status) {
-        let bingoAnswer = document.createElement("p");
-        bingoAnswer.className = "bingo-answer-child";
-        bingoAnswer.innerText = cards[i].innerText;
-        answerText.push(bingoAnswer.innerText);
-        bingoAnswerDiv.appendChild(bingoAnswer);
-      }
-    }
-    let bingoWinDiv = document.getElementById("win");
-    bingoWinDiv.children[0].children[0].classList.add("gentle-tilt-move-shake");
-    bingoWinDiv.style.visibility = "visible";
-    particles.refresh();
+
+  // Check if bingo has been achieved
+  if (!bingo) {
+    return;
   }
+
+  // Add checked cards to answer div
+  const answerText = [];
+  const bingoAnswerDiv = document.getElementById("answers");
+  cards.forEach(card => {
+    if (card.checked.status) {
+      const bingoAnswer = document.createElement("p");
+      bingoAnswer.classList.add("bingo-answer-child");
+      bingoAnswer.innerText = card.innerText;
+      answerText.push(bingoAnswer.innerText);
+      bingoAnswerDiv.appendChild(bingoAnswer);
+    }
+  });
+
+  // Show win message and add animation
+  const bingoWinDiv = document.getElementById("win");
+  const winMessage = bingoWinDiv.children[0].children[0];
+  winMessage.classList.add("gentle-tilt-move-shake");
+  bingoWinDiv.style.visibility = "visible";
+
+  // Refresh particles
+  particles.refresh();
 };
 
 tsParticles.load("tsparticles", {
@@ -523,3 +534,4 @@ tsParticles.load("tsparticles", {
   },
 });
 const particles = tsParticles.domItem(0);
+
