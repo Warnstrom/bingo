@@ -84,7 +84,6 @@ const getRandomEmoji = () => {
   );
   const index = Math.floor(Math.random() * probability.length);
   const rarity = EMOJIS[probability[index]];
-  console.log(rarity.type[theme])
   return rarity.type[theme] ?? "🤓";
 };
 
@@ -120,66 +119,49 @@ const randomNumber = (min, max) => {
 };
 
 const checkDiagonal = (items) => {
-  let diagonal_left_right = [
-    { row: 0, column: 0 },
-    { row: 1, column: 1 },
-    { row: 2, column: 2 },
-    { row: 3, column: 3 },
-    { row: 4, column: 4 },
-  ];
-  let diagonal_right_left = [
-    { row: 0, column: 4 },
-    { row: 1, column: 3 },
-    { row: 2, column: 2 },
-    { row: 3, column: 1 },
-    { row: 4, column: 0 },
+  const diagonalDirections = [
+    [{ row: 0, column: 0 }, { row: 1, column: 1 }, { row: 2, column: 2 }, { row: 3, column: 3 }, { row: 4, column: 4 }],
+    [{ row: 0, column: 4 }, { row: 1, column: 3 }, { row: 2, column: 2 }, { row: 3, column: 1 }, { row: 4, column: 0 }],
   ];
 
-  let LR_i = 0;
-  let RL_i = 0;
-
-  for (const newItem of diagonal_left_right) {
-    items.map((item) => {
-      if (item.row === newItem.row && item.column === newItem.column) {
-        LR_i++;
+  for (const diagonal of diagonalDirections) {
+    let count = 0;
+    for (const item of diagonal) {
+      if (items.some(i => i.row === item.row && i.column === item.column)) {
+        count++;
       }
-    });
-  }
-  for (const newItem of diagonal_right_left) {
-    items.map((item) => {
-      if (item.row === newItem.row && item.column === newItem.column) {
-        RL_i++;
-      }
-    });
-  }
-  if (LR_i === 5 || RL_i === 5) {
-    bingo = true;
-    console.log("Diagonal");
-    win();
+    }
+    if (count === 5) {
+      bingo = true;
+      console.log("Diagonal");
+      win();
+    }
   }
 };
+
 const reset = () => {
-  usedNumbers = [];
-  usedAnswers = [];
-  checkedItems = [];
-  localStorageUpdater = [];
-  answerText = [];
-  let bingoAnswerDiv = document.getElementById("answers");
-  removeChilds(bingoAnswerDiv);
-  let bingoWinDiv = document.getElementById("win");
+  // Reset all game state variables and local storage data
+  usedNumbers.length = 0;
+  usedAnswers.length = 0;
+  checkedItems.length = 0;
+  localStorageUpdater.length = 0;
+  answerText.length = 0;
+  localStorage.clear();
+
+  // Remove all children of the "answers" and "bingo-grid" elements
+  const bingoAnswerDiv = document.getElementById("answers");
+  bingoAnswerDiv.innerHTML = "";
+  const bingoGrid = document.getElementById("bingo-grid");
+  bingoGrid.innerHTML = "";
+
+  // Hide the "win" element and stop particle animation
+  const bingoWinDiv = document.getElementById("win");
   bingoWinDiv.style.visibility = "hidden";
   particles.stop();
-  const bingoGrid = document.getElementById("bingo-grid");
-  removeChilds(bingoGrid);
-  localStorage.clear();
+
+  // Reset bingo game state variable and recreate the game board
   bingo = false;
   createGame();
-};
-
-const removeChilds = (parent) => {
-  while (parent.lastChild) {
-    parent.removeChild(parent.lastChild);
-  }
 };
 
 const updateGameStatus = (object) => {
