@@ -271,8 +271,8 @@ const generateBingoCards = async () => {
   let row = 0;
   let rows = 0;
   let column = 0;
-  for (let i = 0; i < phrases.length; ) {
-    let n = randomNumber(0, 24);
+  for (let i = 0; i < 25; ) {
+    let n = randomNumber(0, phrases.length-1);
     if (usedNumbers.includes(n)) {
       n = randomNumber(0, 24);
     } else {
