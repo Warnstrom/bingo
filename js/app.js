@@ -274,7 +274,7 @@ const generateBingoCards = async () => {
   for (let i = 0; i < 25; ) {
     let n = randomNumber(0, phrases.length-1);
     if (usedNumbers.includes(n)) {
-      n = randomNumber(0, 24);
+      n = randomNumber(0, phrases.length-1);
     } else {
       usedNumbers.push(n);
       const checked = document.createElement("span");
