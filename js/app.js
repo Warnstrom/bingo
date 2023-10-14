@@ -31,7 +31,7 @@ const phrases = [
   "That was so not fair!",
   "Va?!",
 ];
-const phrases_length = Phrasen.length-1;
+const phrases_length = phrases.length-1;
 
 const EMOJIS = [
   {
