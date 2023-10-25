@@ -31,6 +31,7 @@ const phrases = [
   "That was so not fair!",
   "Va?!",
 ];
+const phrases_length = phrases.length-1;
 
 const EMOJIS = [
   {
@@ -272,9 +273,9 @@ const generateBingoCards = async () => {
   let rows = 0;
   let column = 0;
   for (let i = 0; i < 25; ) {
-    let n = randomNumber(0, phrases.length-1);
+    let n = randomNumber(0, phrases_length);
     if (usedNumbers.includes(n)) {
-      n = randomNumber(0, 24);
+      n = randomNumber(0, phrases_length);
     } else {
       usedNumbers.push(n);
       const checked = document.createElement("span");
