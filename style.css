@@ -7,112 +7,63 @@
     --secondary-text: #751916;
     --primary-dark-text: #7f0000;
     --container-background: rgba(0, 0, 0, 0.7);
-  }
-  
-  @font-face {
-    font-family: "theme-christmas-font";
-    src: url("./fonts/christmas.ttf");
-  }
-  
-  @font-face {
+}
+
+
+@font-face {
     font-family: "theme-halloween-font";
     src: url("./fonts/creepster.regular.ttf");
-  }
-  
-  body {
+}
+
+body {
     margin: 0;
     background-image: var(--background-image);
     background-repeat: no-repeat;
     background-size: cover;
-  }
-  
-  main {
-    height: 100vh;
+}
+
+main {
+    height: 95vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
-  
-  .dropbtn {
-    font-family: var(--primary-font);
-    background-color: var(--grid-background);
-    color: var(--primary-text);
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .dropbtn:hover,
-  .dropbtn:focus {
-    background-color: #2980B9;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    border-radius: 8px;
-    margin: 1px;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-  }
-  
-  .show {
-    display: block;
-  }
-  
-  section {
-    border: 3px solid black;
-    border-radius: 8px;
-    background-color: white;
-    height: 80vh;
-    width: 65vw;
+}
+
+section {
     display: flex;
     justify-content: center;
     flex-direction: column;
-  }
-  
-  .bingo-title {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .bingo-title > h1 {
-    margin: 0;
-    font-size: 3em;
-    color: var(--primary-dark-text);
-    text-shadow: 3px 4px 7px rgba(81, 67, 21, 0.7);
-    font-family: var(--primary-font);
-  }
-  
-  #bingo-grid {
-    height: 90%;
+}
+
+#bitset {
     display: grid;
-    grid-template-columns: repeat(5, 20%);
-    grid-template-rows: repeat(5, 20%);
+    grid-template-columns: repeat(5, auto);
+    grid-template-rows: repeat(5, auto);
     padding: 5px;
+    background-color: var(--primary-text);
     border-radius: 10px;
     margin: 5px;
-  }
-  
-  .grid-item {
-    font-family: var(--primary-font);
-    color: var(--primary-text);
-    background-color: var(--grid-background);
-    border: 1px solid var(--grid-border);
-    text-shadow: 2px 2px 2px rgb(53, 44, 14, 0.5);
-    font-size: 30px;
-    text-align: center;
-    opacity: 0.9;
+    gap: 5px;
+    justify-content: center;
+    align-content: center;
+    width: max-content;
+}
+
+.bit {
+    width: 150px;
+    height: 150px;
+    padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+    font-size: 24px;
+    color: white;
+    background-color: var(--secondary-background, #333);
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
 
 span {
     display: flex;
@@ -120,11 +71,10 @@ span {
     align-items: center;
 }
 
-.checked {
-    position: absolute;
+.bit.active {
     z-index: 1;
     opacity: 0.9;
-    font-size: 100px;
+    font-size: 80px;
     transition: ease-in .08s;
 }
 
@@ -142,7 +92,7 @@ span {
     font-size: 50px;
 }
 
-.bingo-container {
+.bingo-answer-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -188,25 +138,7 @@ svg:hover {
     transform: rotate(360deg);
 }
 
-.dropdownButton {
-    margin: 0;
-    padding: 12px 16px;
-    font-family: var(--primary-font);
-    background-color: #751916;
-    text-decoration: none;
-    color: white;
-    border: none;
-    width: 100%;
-    display: block;
-}
-
-.dropdownButton:hover {
-    cursor: pointer;
-    background-color: #460806;
-}
-
-.reset-button, .theme-button {
-    font-family: var(--primary-font);
+.reset-button {
     display: inline-block;
     position: relative;
     overflow: hidden;
@@ -222,29 +154,6 @@ svg:hover {
     -webkit-user-select: none;
     touch-action: manipulation;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px
-}
-
-.credit {
-    color: #fff;
-    text-shadow:
-        -1px 0 rgba(0, 0, 0, 0.486),
-        0 1px rgba(0, 0, 0, 0.486),
-        1px 0 rgba(0, 0, 0, 0.486),
-        0 -1px rgba(0, 0, 0, 0.486);
-    font-family: 'Roboto', sans-serif;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-}
-
-.github-logo {
-    margin: 2px;
-}
-
-.github-code {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 /* Media queries */
@@ -337,4 +246,32 @@ html[data-theme="christmas"] {
     --grid-background: #c62828;
     --grid-text: #4caf50;
     --grid-border: #1b531c;
+}
+
+.bit-row {
+    margin-bottom: 10px;
+}
+
+.binary-string {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.bits-labels {
+    font-family: monospace;
+    /* Use a monospace font for bits */
+}
+
+.bitpiece {
+    padding: 0 2px;
+    /* Space between bits */
+    font-size: 16px;
+    /* Increase size for clarity */
+}
+
+.bitpiece:hover {
+    background-color: #e0e0e0;
+    /* Highlight on hover */
+    cursor: pointer;
+    /* Pointer cursor on hover */
 }
